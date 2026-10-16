@@ -13,6 +13,8 @@ class Screen_Manager:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                else:
+                    self.current_scene.handle_event(event)
             self.current_scene.run()
             pygame.display.flip()
             clock.tick(60)
