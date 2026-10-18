@@ -1,10 +1,6 @@
 import pygame
 from tile import Tile
-
-
-DEFAULT_MAP_SIZE = (16,16)
-DEFAULT_START_TILE = (0,0)
-DEFAULT_GOAL_TILE = (DEFAULT_MAP_SIZE[0] -1, DEFAULT_MAP_SIZE[1]-1)
+from config import DEFAULT_GOAL_TILE, DEFAULT_MAP_SIZE, DEFAULT_START_TILE
 
 class Map:
     def __init__(self, screen):
@@ -45,4 +41,7 @@ class Map:
                     colour = (0,255,0)
                 elif tile.get_type() == "START":
                     colour = (0,0,255)
+                elif tile.get_type() == "EXPLORED":
+                    colour = (100,100,100)
+
                 pygame.draw.rect(self.screen, colour, self.tiles[y][x].get_rect())
