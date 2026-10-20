@@ -9,7 +9,8 @@ class Tile:
         self.height = height
         self.__type = "EMPTY"
         self.previous = None
-        self.__cost = 99999
+        self.__cost = float("INF")
+        self.__previous = None
 
     def get_rect(self) -> pygame.Rect:
         return pygame.Rect(self.x, self.y, self.width, self.height)
@@ -25,3 +26,9 @@ class Tile:
     
     def set_cost(self, new_cost: int):
         self.__cost = new_cost
+
+    def get_previous(self) -> Tile:
+        return self.__previous
+    
+    def set_previous(self, new_previous):
+        self.__previous = new_previous
