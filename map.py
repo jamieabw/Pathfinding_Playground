@@ -1,6 +1,7 @@
 import pygame
 from tile import Tile
 from config import DEFAULT_GOAL_TILE, DEFAULT_MAP_SIZE, DEFAULT_START_TILE
+from a_star_algorithm import A_Star_Algorithm
 
 class Map:
     def __init__(self, screen):
@@ -26,7 +27,9 @@ class Map:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
             x, y = event.pos
             self.tiles[y // (pygame.display.get_window_size()[1] // self.map_size[1])][x // (pygame.display.get_window_size()[0] // self.map_size[0])].set_type("EMPTY")
-        
+        if event.type == pygame.KEYDOWN:
+            A_Star_Algorithm.run_search(self.tiles, (0,0), (10,10))
+
             
 
 
