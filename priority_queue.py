@@ -14,3 +14,6 @@ class Priority_Queue:
     def __len__(self) -> int:
         return len(self.__contents)
     
+    def __str__(self) -> str:
+        return f"{self.__contents}"
+    

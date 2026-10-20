@@ -28,7 +28,7 @@ class Map:
             x, y = event.pos
             self.tiles[y // (pygame.display.get_window_size()[1] // self.map_size[1])][x // (pygame.display.get_window_size()[0] // self.map_size[0])].set_type("EMPTY")
         if event.type == pygame.KEYDOWN:
-            A_Star_Algorithm.run_search(self.tiles, (0,0), (10,10))
+            A_Star_Algorithm.run_search(self.tiles, (0,0), (15,14), self)
 
             
 
@@ -48,3 +48,4 @@ class Map:
                     colour = (100,100,100)
 
                 pygame.draw.rect(self.screen, colour, self.tiles[y][x].get_rect())
+                pygame.display.flip()
