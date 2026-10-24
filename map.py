@@ -3,6 +3,9 @@ from tile import Tile
 from config import DEFAULT_GOAL_TILE, DEFAULT_MAP_SIZE, DEFAULT_START_TILE
 from a_star_algorithm import A_Star_Algorithm
 
+TILE_COLOUR_MAP = {"WALL" : (0,0,0), "EMPTY" : (255,255,255), "START" : (0,255,0),
+                   "GOAL" : (255,0,0), "PATH" : (0,0,255), "EXPLORED" : (100,0,100)}
+
 class Map:
     def __init__(self, screen):
         self.screen = screen 
@@ -34,8 +37,10 @@ class Map:
         for tiles in self.tiles:
             for tile in tiles:
                 tile.set_previous(None)
+                tile.set_cost(float("INF"))
                 if tile.get_type() == "EXPLORED" or tile.get_type() == "PATH":
                     tile.set_type("EMPTY")
+        self.tiles[DEFAULT_START_TILE[1]][DEFAULT_START_TILE[0]].set_cost(0)
 
             
 
@@ -44,18 +49,6 @@ class Map:
         for y in range(len(self.tiles)):
             for x in range(len(self.tiles[0])):
                 tile = self.tiles[y][x]
-                colour = (255,255,255)
-                if tile.get_type() == "WALL":
-                    colour = (0,0,0)
-                elif tile.get_type() == "GOAL":
-                    colour = (0,255,0)
-                elif tile.get_type() == "START":
-                    colour = (0,0,255)
-                elif tile.get_type() == "EXPLORED":
-                    colour = (100,100,100)
-                elif tile.get_type() == "PATH":
-                    colour = (0,100,100)
-                
-
+                colour = TILE_COLOUR_MAP[tile.get_type()]
                 pygame.draw.rect(self.screen, colour, self.tiles[y][x].get_rect())
                 pygame.display.flip()

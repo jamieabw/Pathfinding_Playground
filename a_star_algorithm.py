@@ -4,9 +4,6 @@ from config import DEFAULT_GOAL_TILE, DEFAULT_MAP_SIZE, DEFAULT_START_TILE
 from priority_queue import Priority_Queue
 class A_Star_Algorithm:
 
-    def find_goal(tiles, starting_tile, goal_tile):
-        current_tile = starting_tile
-
     def get_neighbours(tiles, current_tile_index):
         neighbours: list[Tile] = [None, None, None, None] # top, right, down, left
         y = current_tile_index[0] # top
@@ -46,8 +43,8 @@ class A_Star_Algorithm:
     def build_path(tiles: list[list[Tile]], starting_tile_index: tuple[int], goal_tile_index: tuple[int]):
         goal_tile = tiles[goal_tile_index[0]][goal_tile_index[1]]
         starting_tile = tiles[starting_tile_index[1]][starting_tile_index[0]]
-        tile = goal_tile
-        while tile != starting_tile:
+        tile = goal_tile.get_previous()
+        while tile != starting_tile and tile != None:
             tile.set_type("PATH")
             tile = tile.get_previous()
 
@@ -67,12 +64,13 @@ class A_Star_Algorithm:
             for neighbour in neighbours: 
                 if neighbour is None:
                     continue
-                tiles[neighbour[0]][neighbour[1]].set_type("EXPLORED")
                 frontier.enqueue((neighbour[0], neighbour[1]))
                 if current_tile == goal_tile_index:
                     return
+                tiles[neighbour[0]][neighbour[1]].set_type("EXPLORED")
             current_tile = frontier.dequeue()
             print(t(current_tile))
+            tiles[DEFAULT_GOAL_TILE[1]][DEFAULT_GOAL_TILE[0]].set_type("GOAL")
             map.run()
         A_Star_Algorithm.build_path(tiles, starting_tile_index, goal_tile_index)
 
