@@ -27,7 +27,7 @@ class Tile:
     def set_cost(self, new_cost: int):
         self.__cost = new_cost
 
-    def get_previous(self) -> Tile:
+    def get_previous(self):# -> Tile: # type: ignore
         return self.__previous
     
     def set_previous(self, new_previous):

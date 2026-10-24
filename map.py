@@ -28,7 +28,14 @@ class Map:
             x, y = event.pos
             self.tiles[y // (pygame.display.get_window_size()[1] // self.map_size[1])][x // (pygame.display.get_window_size()[0] // self.map_size[0])].set_type("EMPTY")
         if event.type == pygame.KEYDOWN:
-            A_Star_Algorithm.run_search(self.tiles, (0,0), (15,14), self)
+            A_Star_Algorithm.run_search(self.tiles, (0,0), (15,15), self)
+
+    def reset_explored(self):
+        for tiles in self.tiles:
+            for tile in tiles:
+                tile.set_previous(None)
+                if tile.get_type() == "EXPLORED" or tile.get_type() == "PATH":
+                    tile.set_type("EMPTY")
 
             
 
@@ -46,6 +53,9 @@ class Map:
                     colour = (0,0,255)
                 elif tile.get_type() == "EXPLORED":
                     colour = (100,100,100)
+                elif tile.get_type() == "PATH":
+                    colour = (0,100,100)
+                
 
                 pygame.draw.rect(self.screen, colour, self.tiles[y][x].get_rect())
                 pygame.display.flip()
