@@ -30,7 +30,11 @@ class A_Star_Algorithm:
                 if current_tile == goal_tile_index:
                     return
                 tiles[neighbour[0]][neighbour[1]].set_type("EXPLORED")
-            current_tile = frontier.dequeue()
+            try:
+                current_tile = frontier.dequeue()
+            except Exception:
+                print("NO PATH AVAILABLE")
+                return
             tiles[current_tile[0]][current_tile[1]].set_type("CHECKING")
             print(t(current_tile))
             tiles[goal_tile_index[0]][goal_tile_index[1]].set_type("GOAL")

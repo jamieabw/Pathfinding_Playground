@@ -20,7 +20,11 @@ class DFS:
                     continue
                 stack.push((neighbour[0], neighbour[1]))
                 tiles[neighbour[0]][neighbour[1]].set_type("EXPLORED")
-            current_tile = stack.pop()
+            try:
+                current_tile = stack.pop()
+            except Exception:
+                print("NO PATH AVAILABLE")
+                return
             tiles[current_tile[0]][current_tile[1]].set_type("CHECKING")
             map.run()
             tiles[goal_tile_index[0]][goal_tile_index[1]].set_type("GOAL")
