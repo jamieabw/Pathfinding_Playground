@@ -1,19 +1,17 @@
-class Priority_Queue:
+from queue import Queue
+class Priority_Queue(Queue):
     def __init__(self, key):
-        self.__contents = []
+        super().__init__()
         self.__sort_key = key
 
     def enqueue(self, item):
-        self.__contents.append(item)
-        self.__contents = sorted(self.__contents, key=self.__sort_key)
+        super().enqueue(item)
+        self._contents.sort(key=self.__sort_key)
 
 
-    def dequeue(self):
-        return self.__contents.pop(0)
-    
-    def __len__(self) -> int:
-        return len(self.__contents)
-    
-    def __str__(self) -> str:
-        return f"{self.__contents}"
-    
+queue = Priority_Queue(lambda x: x)
+queue.enqueue(2)
+queue.enqueue(1)
+print(queue)
+print(queue.dequeue())
+print(queue.dequeue())
