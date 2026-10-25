@@ -28,6 +28,11 @@ class Map:
 
 
     def handle_event(self, event):
+        """Handles pygame events such as clicks and key presses.
+
+        Args:
+            event (pygame.event): The event passed from the screen manager.
+        """        
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             x, y = event.pos
             self.tiles[y // (pygame.display.get_window_size()[1] // self.map_size[1])][x // (pygame.display.get_window_size()[0] // self.map_size[0])].set_type("WALL")
@@ -58,6 +63,8 @@ class Map:
                 self.tiles[tile_y][tile_x].set_type("GOAL")
 
     def reset_explored(self):
+        """Resets all tiles which have been explored, sets them back to EMPTY and resets their costs.
+        """        
         for tiles in self.tiles:
             for tile in tiles:
                 tile.set_previous(None)
@@ -66,10 +73,9 @@ class Map:
                     tile.set_type("EMPTY")
         self.tiles[self.start_tile[0]][self.start_tile[1]].set_cost(0)
 
-            
-
-
     def run(self):
+        """Draws each tile in the map and updates the screen.
+        """        
         for y in range(len(self.tiles)):
             for x in range(len(self.tiles[0])):
                 tile = self.tiles[y][x]
@@ -78,15 +84,29 @@ class Map:
                 pygame.display.flip()
 
     def build_path(self, starting_tile_index: tuple[int], goal_tile_index: tuple[int]):
-            goal_tile = self.tiles[goal_tile_index[0]][goal_tile_index[1]]
-            starting_tile = self.tiles[starting_tile_index[0]][starting_tile_index[1]]
-            tile = goal_tile.get_previous()
-            while tile != starting_tile and tile != None:
-                tile.set_type("PATH")
-                tile = tile.get_previous()
+        """Builds a path from the start tile to the goal tile using a series of pointers.
+
+        Args:
+            starting_tile_index (tuple[int]): The index of the starting tile.
+            goal_tile_index (tuple[int]): The index of the goal tile.
+        """            
+        goal_tile = self.tiles[goal_tile_index[0]][goal_tile_index[1]]
+        starting_tile = self.tiles[starting_tile_index[0]][starting_tile_index[1]]
+        tile = goal_tile.get_previous()
+        while tile != starting_tile and tile != None:
+            tile.set_type("PATH")
+            tile = tile.get_previous()
 
 
-    def get_neighbours(self, current_tile_index):
+    def get_neighbours(self, current_tile_index) -> list[tuple]:
+        """Gets the neighbouring tiles of the current tile
+
+        Args:
+            current_tile_index (_type_): The index of the current tile being expanded.
+
+        Returns:
+            list[tuple]: A list of the neighbour tiles, None if a tile doesn't exist in the position (top, right, left, down)
+        """        
         neighbours: list[Tile] = [None, None, None, None] # top, right, down, left
         y = current_tile_index[0] # top
         x = current_tile_index[1] # bottom

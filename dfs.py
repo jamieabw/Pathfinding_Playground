@@ -1,8 +1,15 @@
 from tile import Tile
 from stack import Stack
-from config import DEFAULT_GOAL_TILE
 class DFS:
     def run_search(tiles: list[list[Tile]], starting_tile_index: tuple[int], goal_tile_index: tuple[int], map):
+        """Performs the Depth First Search to find a path from the start tile to the goal tile.
+
+        Args:
+            tiles (list[list[Tile]]): A 2d list of tiles indexed by their position [y][x].
+            starting_tile_index (tuple[int]): The index of the starting tile.
+            goal_tile_index (tuple[int]): The index of the goal tile.
+            map (Map): The environment class.
+        """        
         map.reset_explored()
         stack = Stack()
         current_tile = starting_tile_index

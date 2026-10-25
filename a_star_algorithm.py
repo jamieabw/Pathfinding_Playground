@@ -5,6 +5,14 @@ from priority_queue import Priority_Queue
 class A_Star_Algorithm:
 
     def run_search(tiles: list[list[Tile]], starting_tile_index: tuple[int], goal_tile_index: tuple[int], map):
+        """Performs the A* algorithm to determine a path from starting tile to the goal tile.
+
+        Args:
+            tiles (list[list[Tile]]): A 2d list of the tiles indexed by their position in the grid [y][x].
+            starting_tile_index (tuple[int]): The index of the starting tile.
+            goal_tile_index (tuple[int]): The index of the goal tile.
+            map (_type_): The environment class.
+        """        
         map.reset_explored()
         t = lambda x : tiles[x[0]][x[1]].get_cost() + A_Star_Algorithm.heuristic(tiles[x[1]][x[0]], tiles[goal_tile_index[1]][goal_tile_index[0]])
         frontier = Priority_Queue(lambda x : tiles[x[0]][x[1]].get_cost() + A_Star_Algorithm.heuristic(tiles[x[0]][x[1]], tiles[goal_tile_index[0]][goal_tile_index[1]]))
@@ -29,5 +37,14 @@ class A_Star_Algorithm:
             map.run()
         map.build_path(starting_tile_index, goal_tile_index)
 
-    def heuristic(current_tile, goal_tile):
+    def heuristic(current_tile: Tile, goal_tile: Tile)-> float:
+        """Gets the cartesian distance between the current tile and the goal tile to use as a heuristic value.
+
+        Args:
+            current_tile (Tile): Current tile.
+            goal_tile (Tile): Goal tile.
+
+        Returns:
+            float: The heuristic value.
+        """        
         return math.sqrt(((goal_tile.y - current_tile.y) ** 2) + ((goal_tile.x - current_tile.x) ** 2)) # straight distance between current and target for h(n)

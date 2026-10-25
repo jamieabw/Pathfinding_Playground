@@ -7,6 +7,8 @@ class Screen_Manager:
 
 
     def run(self):
+        """Updates and keeps the FPS of the screen.
+        """        
         clock = pygame.time.Clock()
         self.running = True
         while self.running:

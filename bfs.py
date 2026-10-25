@@ -3,6 +3,14 @@ from queue import Queue
 from config import DEFAULT_GOAL_TILE
 class BFS:
     def run_search(tiles: list[list[Tile]], starting_tile_index: tuple[int], goal_tile_index: tuple[int], map):
+        """Performs Breadth First Search to find the optimal path from the starting tile to the goal tile.
+
+        Args:
+            tiles (list[list[Tile]]): A 2d list of tiles indexed by their position [y][x].
+            starting_tile_index (tuple[int]): The index of the start tile.
+            goal_tile_index (tuple[int]): The index of the goal tile.
+            map (Map): The environment class.
+        """        
         map.reset_explored()
         queue = Queue()
         current_tile = starting_tile_index
