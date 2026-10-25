@@ -9,9 +9,10 @@ TILE_COLOUR_MAP = {"WALL" : (0,0,0), "EMPTY" : (255,255,255), "START" : (0,255,0
                    "GOAL" : (255,0,0), "PATH" : (0,0,255), "EXPLORED" : (100,0,100), "CHECKING" : (100,100,0)}
 
 class Map:
-    def __init__(self, screen):
-        self.screen = screen 
+    def __init__(self, screen, clock):
+        self.screen = screen
         self.map_size = DEFAULT_MAP_SIZE
+        self.clock = clock
         self.tiles = []
         for y in range(self.map_size[1]):
             tile_row = []
@@ -81,7 +82,8 @@ class Map:
                 tile = self.tiles[y][x]
                 colour = TILE_COLOUR_MAP[tile.get_type()]
                 pygame.draw.rect(self.screen, colour, self.tiles[y][x].get_rect())
-                pygame.display.flip()
+        pygame.display.flip()
+        self.clock.tick(60)
 
     def build_path(self, starting_tile_index: tuple[int], goal_tile_index: tuple[int]):
         """Builds a path from the start tile to the goal tile using a series of pointers.

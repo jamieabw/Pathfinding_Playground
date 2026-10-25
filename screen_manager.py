@@ -2,14 +2,14 @@ import pygame
 
 class Screen_Manager:
     def __init__(self, initial_scene, **other_scenes):
+        self.clock = pygame.time.Clock()
         self.display = pygame.display.set_mode((800, 800))
-        self.current_scene = initial_scene(self.display)
+        self.current_scene = initial_scene(self.display, self.clock)
 
 
     def run(self):
         """Updates and keeps the FPS of the screen.
         """        
-        clock = pygame.time.Clock()
         self.running = True
         while self.running:
             for event in pygame.event.get():
@@ -19,4 +19,4 @@ class Screen_Manager:
                     self.current_scene.handle_event(event)
             self.current_scene.run()
             pygame.display.flip()
-            clock.tick(60)
+            self.clock.tick(60)
